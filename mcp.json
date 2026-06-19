@@ -1,30 +1,41 @@
 {
   "name": "SwapTitan MCP",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "protocol": "2024-11-05",
   "endpoint": "https://swaptitan.net/mcp",
   "transport": ["http"],
+  "homepage": "https://swaptitan.net",
+  "license": "MIT",
   "tools": [
-    {"name": "get_prices", "description": "Live BTC/ETH/SOL/XMR prices"},
-    {"name": "get_assets", "description": "List 1288+ swappable assets"},
-    {"name": "swap_quote", "description": "Get swap quote (from/to/amount)"},
-    {"name": "swap_create", "description": "Execute a swap order"},
-    {"name": "swap_status", "description": "Check order status by ID"},
-    {"name": "ai_chat", "description": "AI crypto assistant (Llama 3.1)"},
-    {"name": "check_portfolio", "description": "Multi-chain wallet balances"},
-    {"name": "rug_check", "description": "Solana token rug-pull analysis"},
-    {"name": "set_price_alert", "description": "Set Telegram price alert"},
-    {"name": "create_wallet", "description": "Generate new Solana wallet"}
+    {"name": "get_prices", "description": "Live BTC/ETH/SOL/XMR/BNB/LTC/DOGE/TRX/TON/AVAX prices"},
+    {"name": "get_assets", "description": "List 1288+ swappable crypto assets across 3 providers"},
+    {"name": "swap_quote", "description": "Get swap quote — ChangeNOW + SimpleSwap + Heleket aggregated"},
+    {"name": "swap_create", "description": "Execute non-custodial cross-chain swap order"},
+    {"name": "swap_status", "description": "Poll order status: waiting->confirming->exchanging->done"},
+    {"name": "ai_chat", "description": "AI crypto assistant — Llama 3.3 70B"},
+    {"name": "check_portfolio", "description": "Wallet balances on SOL/ETH/BASE/BSC"},
+    {"name": "rug_check", "description": "Token rug-pull / scam analysis"},
+    {"name": "set_price_alert", "description": "Telegram price alert subscription"},
+    {"name": "create_wallet", "description": "Generate non-custodial SOL/ETH/BASE/BSC wallet"}
   ],
   "payment": {
     "type": "x402",
     "asset": "USDC",
     "network": "base-mainnet",
+    "payTo": "0xA20E1D8B9aD0fb580a4c36483b1A841D2bE91E68",
     "prices": {
-      "swap_create": "$0.05",
-      "ai_chat": "$0.025",
-      "default": "free (5/day)"
+      "mcp_call": {"usd": 0.02, "free_per_day": 2},
+      "swap_create": {"usd": 0.05, "free_per_day": 3},
+      "ai_chat": {"usd": 0.025, "free_per_day": 2}
+    },
+    "subscription": {
+      "agent_tier": {"price_eur": 49.99, "url": "https://swaptitan.net/pricing"}
     }
   },
-  "agent_card": "https://swaptitan.net/.well-known/agent.json"
+  "auth": {
+    "x402": "X-Payment header with USDC tx hash on Base",
+    "license": "X-License-Key header — unlimited calls"
+  },
+  "agent_card": "https://swaptitan.net/.well-known/agent.json",
+  "repository": "https://github.com/polsolbridge/swaptitan-mcp"
 }
